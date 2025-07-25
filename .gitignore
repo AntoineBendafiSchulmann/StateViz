@@ -1,0 +1,5 @@
+node_modules/
+*.lock
+*lock.yaml
+packages/core/dist
+coverage/
