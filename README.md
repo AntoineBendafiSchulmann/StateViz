@@ -68,7 +68,7 @@ pnpm test -- --coverage   # même chose avec rapport de couverture en plus
 
 | Tâche                                          | État |
 | ---------------------------------------------- | ---- |
-| Panneau latéral de propriété (rename / delete) | ⏳   |
+| Panneau latéral de propriété (rename / delete) | ✅   |
+| Persistance (localStorage)                     | ✅   |
 | Export / Import JSON                           | ⏳   |
-| Persistance                                    | ⏳   |
-| Thème Radix complet + toasts                   | ⏳   |
+| Thème Radix complet + toasts                   | ⏳   |
