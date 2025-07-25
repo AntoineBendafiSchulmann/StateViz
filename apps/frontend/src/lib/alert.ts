@@ -1,3 +1,3 @@
 export function errorAlert(message: string) {
-  window.alert(`❌ ${message}`)
+  window.alert(`❌ ${message}`)
 }

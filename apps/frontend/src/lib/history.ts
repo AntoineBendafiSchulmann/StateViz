@@ -1,6 +1,6 @@
 import { StateCreator } from 'zustand'
 
-type HistoryFns = {
+export interface HistoryFns {
   undo: () => void
   redo: () => void
   canUndo: () => boolean
@@ -12,7 +12,7 @@ const clone = <T,>(o: T): T =>
     ? structuredClone(o)
     : JSON.parse(JSON.stringify(o))
 
-type Snapshot<S> = {
+interface Snapshot<S> {
   graph: S extends { graph: infer G } ? G : never
   positions: S extends { positions: infer P } ? P : never
 }
@@ -59,14 +59,18 @@ export function withHistory<
     const undo = () => {
       if (!past.length) return
       const snap = past.pop()!
-      future.push(clone({ graph: get().graph, positions: get().positions } as Snapshot<S>))
+      future.push(
+        clone({ graph: get().graph, positions: get().positions } as Snapshot<S>),
+      )
       restore(snap)
     }
 
     const redo = () => {
       if (!future.length) return
       const snap = future.pop()!
-      past.push(clone({ graph: get().graph, positions: get().positions } as Snapshot<S>))
+      past.push(
+        clone({ graph: get().graph, positions: get().positions } as Snapshot<S>),
+      )
       restore(snap)
     }
 

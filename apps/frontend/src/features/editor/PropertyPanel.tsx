@@ -28,7 +28,7 @@ export default function PropertyPanel() {
   return (
     <Dialog.Root open onOpenChange={() => setSelectedId(undefined)}>
       <Dialog.Content className="max-w-[320px]">
-        <Dialog.Title>State « {selectedId} »</Dialog.Title>
+        <Dialog.Title>State "{selectedId}"</Dialog.Title>
 
         <Flex direction="column" gap="3">
           <TextField.Root defaultValue={selectedId} onBlur={e => rename(e.currentTarget.value)} />

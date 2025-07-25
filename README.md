@@ -16,6 +16,13 @@ StateViz/
 
 ```bash
 pnpm i
+pnpm dev
+```
+
+## Démarrage (développement)
+
+```bash
+pnpm i
 pnpm --filter @stateviz/core run build
 pnpm --filter frontend run dev
 ```

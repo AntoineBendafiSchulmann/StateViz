@@ -4,7 +4,7 @@ import { Graph, Transition } from '@stateviz/core'
 
 type Mode = 'idle' | 'pick-target'
 
-interface GraphState {
+export interface GraphState {
   graph: Graph
   setGraph: (g: Graph) => void
   positions: Record<string, { x: number; y: number }>
@@ -48,7 +48,10 @@ export const useGraphStore = create(
       createTransition: (src, tgt, evt) =>
         set((s) => {
           const from = s.graph.states[src] ?? {}
-          const on = { ...(from.on ?? {}), [evt]: { event: evt, target: tgt } as Transition }
+          const on = {
+            ...(from.on ?? {}),
+            [evt]: { event: evt, target: tgt } as Transition,
+          }
           return {
             graph: {
               ...s.graph,
@@ -64,7 +67,9 @@ export const useGraphStore = create(
           const from = s.graph.states[src]
           if (!from?.on?.[evt]) return s
 
-          const { [evt]: _, ...rest } = from.on
+          const { [evt]: removed, ...rest } = from.on
+          void removed
+
           const nextStates = {
             ...s.graph.states,
             [src]: Object.keys(rest).length
@@ -92,7 +97,10 @@ export const useGraphStore = create(
 
           return {
             ...s,
-            graph: { ...s.graph, states: { ...s.graph.states, [src]: { ...from, on } } },
+            graph: {
+              ...s.graph,
+              states: { ...s.graph.states, [src]: { ...from, on } },
+            },
             selectedEdge: { source: src, event: newEvt },
           }
         }),
@@ -103,9 +111,10 @@ export const useGraphStore = create(
 
 const STORAGE_KEY = 'stateviz-store'
 
-const saved = typeof localStorage !== 'undefined'
-  ? localStorage.getItem(STORAGE_KEY)
-  : null
+const saved =
+  typeof localStorage !== 'undefined'
+    ? localStorage.getItem(STORAGE_KEY)
+    : null
 
 if (saved) {
   const data = JSON.parse(saved)

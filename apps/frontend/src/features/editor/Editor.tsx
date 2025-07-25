@@ -49,8 +49,9 @@ export function Editor() {
     }))
 
     const es: Edge[] = []
+
     Object.entries(graph.states).forEach(([from, st]) => {
-      st.on &&
+      if (st.on) {
         Object.values(st.on).forEach((t) =>
           es.push({
             id: `${from}-${t.event}`,
@@ -60,7 +61,9 @@ export function Editor() {
             animated: true,
           }),
         )
+      }
     })
+
     return { nodes: ns, edges: es }
   }, [graph, positions])
 
